@@ -1,18 +1,86 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Sudoku Game</title>
-  <link rel="stylesheet" href="/static/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f6fb">
+  <title>Sudoku | Daily Logic</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-  <h1>Sudoku Game</h1>
-  <div id="sudoku-board"></div>
-  <div class="controls">
-    <button id="new-game">New Game</button>
-    <button id="check-solution">Check Solution</button>
-    <span id="message"></span>
-  </div>
-  <script src="/static/main.js"></script>
+  <main class="page-shell">
+    <header class="page-header">
+      <p class="eyebrow">A moment for your mind</p>
+      <h1>Sudoku</h1>
+      <p class="intro">Fill every row, column, and 3 × 3 box with the numbers 1 through 9.</p>
+    </header>
+
+    <section class="game-layout" aria-label="Sudoku game">
+      <div class="game-panel">
+        <div class="game-toolbar">
+          <div class="difficulty-control">
+            <label for="difficulty">Difficulty</label>
+            <select id="difficulty" name="difficulty">
+              <option value="Easy">Easy</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </div>
+          <div class="timer-wrap" aria-label="Elapsed time">
+            <span class="timer-label">Time</span>
+            <output id="timer" aria-live="off">00:00</output>
+          </div>
+        </div>
+
+        <div id="sudoku-board" class="sudoku-board" role="group" aria-label="Sudoku grid"></div>
+
+        <div class="game-controls">
+          <button id="new-game" class="button button-primary" type="button">New game</button>
+          <button id="check-puzzle" class="button button-secondary" type="button">Check puzzle</button>
+          <button id="hint" class="button button-hint" type="button">Hint</button>
+        </div>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+        <ul class="legend" aria-label="Board color key">
+          <li><span class="legend-swatch swatch-error"></span>Conflicting entry</li>
+          <li><span class="legend-swatch swatch-hint"></span>Hint revealed</li>
+        </ul>
+      </div>
+
+      <aside class="leaderboard-panel" aria-labelledby="leaderboard-title">
+        <div class="leaderboard-heading">
+          <div>
+            <p class="eyebrow">Your best runs</p>
+            <h2 id="leaderboard-title">Leaderboard</h2>
+          </div>
+          <span class="top-ten">Top 10</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Player</th>
+                <th scope="col">Time</th>
+                <th scope="col">Hints</th>
+                <th scope="col">Level</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+              <tr class="empty-leaderboard">
+                <td colspan="5">Complete a puzzle to set your first score.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p id="leaderboard-message" class="leaderboard-message" role="status" aria-live="polite"></p>
+      </aside>
+    </section>
+
+    <footer class="page-footer">
+      <span>Use a number key to fill a selected square.</span>
+      <span>Scores are saved on this device.</span>
+    </footer>
+  </main>
+  <script src="{{ url_for('static', filename='main.js') }}" defer></script>
 </body>
 </html>
